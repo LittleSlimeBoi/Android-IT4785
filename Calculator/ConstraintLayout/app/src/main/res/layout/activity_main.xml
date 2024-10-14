@@ -20,7 +20,7 @@
             app:layout_constraintRight_toRightOf="parent">
 
             <TextView
-                android:id="@+id/CurrentEntry"
+                android:id="@+id/IOEntry"
                 android:layout_width="match_parent"
                 android:layout_height="90dp"
                 android:layout_margin="10dp"
@@ -44,7 +44,7 @@
                 android:lineSpacingExtra="5dp"
                 android:paddingBottom="5dp"
                 android:textColor="@android:color/darker_gray"
-                app:layout_constraintBottom_toTopOf="@+id/CurrentEntry"
+                app:layout_constraintBottom_toTopOf="@+id/IOEntry"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent" />

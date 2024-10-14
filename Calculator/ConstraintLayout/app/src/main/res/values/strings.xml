@@ -20,4 +20,5 @@
     <string name="equal">=</string>
     <string name="decimal">.</string>
     <string name="sign_swap">+/-</string>
+    <string name="cant_divide_by_0">Cant divide by 0</string>
 </resources>
