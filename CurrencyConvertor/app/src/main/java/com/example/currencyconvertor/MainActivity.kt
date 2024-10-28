@@ -1,31 +1,55 @@
 package com.example.currencyconvertor
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
-import android.widget.Button
+import android.widget.AdapterView
 import android.widget.EditText
+import android.widget.Spinner
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
+class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener, TextWatcher {
+    lateinit var tvResult: TextView
+    lateinit var tvRate: TextView
+    lateinit var edtAmount: EditText
+    lateinit var spFrom: Spinner
+    lateinit var spTo: Spinner
 
-class MainActivity : AppCompatActivity(), View.OnClickListener {
-    lateinit var tv_to: TextView
-    lateinit var tv_from: TextView
-    lateinit var tv_result: TextView
-    lateinit var edt_amount: EditText
-    lateinit var btnusd: Button
-    lateinit var btngbp: Button
-    lateinit var btnkrw: Button
-    lateinit var btncny: Button
-    lateinit var btneur: Button
-    lateinit var btnjpy: Button
+    val currencyRates = mutableListOf(
+        CurrencyRate("VND", "USD", 0.000041f),
+        CurrencyRate("VND", "CNY", 0.00027f),
+        CurrencyRate("VND", "JPY", 0.0067f),
+        CurrencyRate("VND", "EUR", 0.000039f),
+        CurrencyRate("VND", "VND", 1f),
+        CurrencyRate("USD", "VND", 24390f),
+        CurrencyRate("USD", "CNY", 7.30f),
+        CurrencyRate("USD", "JPY", 149.30f),
+        CurrencyRate("USD", "EUR", 0.95f),
+        CurrencyRate("USD", "USD", 1f),
+        CurrencyRate("CNY", "VND", 3340f),
+        CurrencyRate("CNY", "USD", 0.137f),
+        CurrencyRate("CNY", "JPY", 20.45f),
+        CurrencyRate("CNY", "EUR", 0.13f),
+        CurrencyRate("CNY", "CNY", 1f),
+        CurrencyRate("JPY", "VND", 6.70f),
+        CurrencyRate("JPY", "USD", 0.0067f),
+        CurrencyRate("JPY", "CNY", 0.049f),
+        CurrencyRate("JPY", "EUR", 0.0064f),
+        CurrencyRate("JPY", "JPY", 1f),
+        CurrencyRate("EUR", "VND", 25400f),
+        CurrencyRate("EUR", "USD", 1.05f),
+        CurrencyRate("EUR", "CNY", 7.80f),
+        CurrencyRate("EUR", "JPY", 156.25f),
+        CurrencyRate("EUR", "EUR", 1f)
+    )
 
     var amount: String = ""
-    var vnd: Double = 0.0
-    var result: Double = 0.0
+    var conversionResult: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,54 +63,73 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         initialize()
     }
 
-    public fun initialize(){
-        tv_to=findViewById(R.id.tv_to)
-        tv_from=findViewById(R.id.tv_from)
-        tv_result=findViewById(R.id.tvresult)
-        edt_amount=findViewById(R.id.edt_amount)
-        btnusd=findViewById(R.id.btnusd)
-        btngbp=findViewById(R.id.btngbp)
-        btnkrw=findViewById(R.id.btnkrw)
-        btncny=findViewById(R.id.btncny)
-        btneur=findViewById(R.id.btneur)
-        btnjpy=findViewById(R.id.btnjpy)
-        btncny.setOnClickListener(this)
-        btnjpy.setOnClickListener(this)
-        btneur.setOnClickListener(this)
-        btngbp.setOnClickListener(this)
-        btnkrw.setOnClickListener(this)
-        btnusd.setOnClickListener(this)
+    private fun initialize() {
+        tvResult = findViewById(R.id.tvResult)
+        tvRate = findViewById(R.id.tvRate)
+        edtAmount = findViewById(R.id.edtAmount)
+        spTo = findViewById(R.id.spToCurrency)
+        spFrom = findViewById(R.id.spFromCurrency)
+        edtAmount.addTextChangedListener(this)
+        spFrom.onItemSelectedListener = this
+        spTo.onItemSelectedListener = this
     }
 
-    override fun onClick(p0: View?){
-        val id = p0?.id
-        when(id){
-            R.id.btnusd -> convert("USD", 25355.0)
-            R.id.btngbp -> convert("GBP", 32899.0)
-            R.id.btneur -> convert("EURO", 27426.0)
-            R.id.btncny -> convert("CNY", 3558.0)
-            R.id.btnjpy -> convert("JPY", 166.2)
-            R.id.btnkrw -> convert("KRW", 18.31)
+    private fun getExchangeRate(fromCurrency: String, toCurrency: String): Float? {
+        return currencyRates.find { it.fromCurrency == fromCurrency && it.toCurrency == toCurrency }?.rate
+    }
+
+    private fun convert(fromCurrency: String, toCurrency: String, rate: Float) {
+        val inputAmount = edtAmount.text.toString()
+        if (inputAmount.isNotEmpty()) {
+            val amountFloat = inputAmount.toFloatOrNull()
+            if (amountFloat != null) {
+                val conversionResult = amountFloat * rate
+                tvResult.text = String.format("%.2f %s", conversionResult, toCurrency)
+                tvRate.text = "1 $fromCurrency = $rate $toCurrency"
+            } else {
+                tvResult.text = ""
+                tvRate.text = ""
+            }
+        } else {
+            tvResult.text = ""
+            tvRate.text = ""
         }
     }
-    fun convert(currency: String, rate: Double){
-        amount = edt_amount.text.toString()
-        vnd = rate
-        result = amount.toDouble() * (vnd)
-        tv_result.text = result.toLong().toString()
-        tv_result.append(" VND")
-        tv_to.text = currency
-        tv_from.text = rateSelector(currency)
-    }
-    fun rateSelector(currency: String): String {
-        when(currency){
-            "USD"  -> return getString(R.string.USD)
-            "GBP"  -> return getString(R.string.GBP)
-            "EURO" -> return getString(R.string.EURO)
-            "CNY"  -> return getString(R.string.CNY)
-            "JPY"  -> return getString(R.string.JPY)
-            "KRW"  -> return getString(R.string.KRW)
+
+    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        val fromCur = spFrom.selectedItem.toString()
+        val toCur = spTo.selectedItem.toString()
+        val curRate = getExchangeRate(fromCur, toCur)
+        if (curRate != null) {
+            convert(fromCur, toCur, curRate)
         }
-        return "???"
+    }
+
+    override fun onNothingSelected(parent: AdapterView<*>?) {
+        // Do nothing
+    }
+
+    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+        val fromCur = spFrom.selectedItem.toString()
+        val toCur = spTo.selectedItem.toString()
+        val curRate = getExchangeRate(fromCur, toCur)
+        if (curRate != null) {
+            convert(fromCur, toCur, curRate)
+        }
+    }
+
+    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+        // No action needed here
+    }
+
+    override fun afterTextChanged(s: Editable?) {
+        val fromCur = spFrom.selectedItem.toString()
+        val toCur = spTo.selectedItem.toString()
+        val curRate = getExchangeRate(fromCur, toCur)
+        if (curRate != null) {
+            convert(fromCur, toCur, curRate)
+        }
     }
 }
+
+data class CurrencyRate(val fromCurrency: String, val toCurrency: String, val rate: Float)
