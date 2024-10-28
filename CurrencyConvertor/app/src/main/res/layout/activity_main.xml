@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="12dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
+        android:gravity="center"
+        android:text="@string/currency_converter"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textView"
+        app:layout_constraintVertical_bias="0.0">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <TextView
+                android:id="@+id/tv_from"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="12dp"
+                android:layout_weight="1"
+                android:text="Currency Name"
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/tv_to"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Currency Rate"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:textAlignment="center"
+                android:layout_margin="12dp"/>
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/edt_amount"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:inputType="number"
+            android:hint="Enter Amount"
+            android:layout_margin="12dp"
+            android:textAlignment="center"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="3">
+            <Button
+                android:id="@+id/btncny"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CNY"
+                android:backgroundTint="@android:color/darker_gray"
+                android:layout_weight="1"
+                android:layout_marginStart="12dp"/>
+            <Button
+                android:id="@+id/btnjpy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="JPY"
+                android:backgroundTint="@android:color/darker_gray"
+                android:layout_weight="1"
+                android:layout_marginStart="12dp"/>
+            <Button
+                android:id="@+id/btnkrw"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="KRW"
+                android:backgroundTint="@android:color/darker_gray"
+                android:layout_weight="1"
+                android:layout_marginStart="12dp"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="3">
+            <Button
+                android:id="@+id/btnusd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="USD"
+                android:backgroundTint="@android:color/darker_gray"
+                android:layout_weight="1"
+                android:layout_marginStart="12dp"/>
+            <Button
+                android:id="@+id/btngbp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="GBP"
+                android:backgroundTint="@android:color/darker_gray"
+                android:layout_weight="1"
+                android:layout_marginStart="12dp"/>
+            <Button
+                android:id="@+id/btneur"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="EUR"
+                android:backgroundTint="@android:color/darker_gray"
+                android:layout_weight="1"
+                android:layout_marginStart="12dp"/>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvresult"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="RESULT"
+            android:textSize="20sp"
+            android:textAlignment="center"
+            android:textStyle="italic"
+            android:layout_margin="10dp"/>
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

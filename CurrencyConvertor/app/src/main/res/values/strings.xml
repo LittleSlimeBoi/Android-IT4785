@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Currency Convertor</string>
+    <string name="currency_converter">Currency Converter</string>
+    <string name="USD">US$ = 25,355 VND</string>
+    <string name="GBP">GBP = 32,899 VND</string>
+    <string name="EURO">EURO = 27,426 VND</string>
+    <string name="CNY">CNY = 3,558 VND</string>
+    <string name="KRW">KRW = 18 VND</string>
+    <string name="JPY">JPY = 166.2 VND</string>
+</resources>
