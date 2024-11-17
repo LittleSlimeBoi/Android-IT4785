@@ -2,14 +2,12 @@ package com.example.studentmanager
 
 import android.os.Bundle
 import android.widget.Button
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 class MainActivity : AppCompatActivity() {
+    lateinit var btnAdd: Button
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -36,12 +34,16 @@ class MainActivity : AppCompatActivity() {
             StudentModel("Phạm Thị Tuyết", "SV019"),
             StudentModel("Lê Văn Vũ", "SV020")
         )
-
-        val studentAdapter = StudentAdapter(students)
-
-        findViewById<RecyclerView>(R.id.recycler_view_students).run {
+        val recyclerView = findViewById<RecyclerView>(R.id.recycler_view_students)
+        val studentAdapter = StudentAdapter(students, this, recyclerView)
+        recyclerView.run {
             adapter = studentAdapter
             layoutManager = LinearLayoutManager(this@MainActivity)
+        }
+
+        btnAdd = findViewById(R.id.btn_add_new);
+        btnAdd.setOnClickListener{
+            studentAdapter.ShowEditDialog(-1)
         }
     }
 }
